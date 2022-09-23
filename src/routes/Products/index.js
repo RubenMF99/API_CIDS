@@ -1,13 +1,14 @@
 const express = require('express');
 const {check} = require('express-validator')
 const {
-    registerProduct
-
+    registerProduct,
+    getProducts,
+    getProductById
 } = require('../../controllers/ProductController'); 
 
 const api = express.Router();
 
-api.post('/products',
+api.route('/products').post(
 [
     check("nameProduct", "El Nombre es Demasiado Largo").isLength({
         max:20
@@ -15,7 +16,9 @@ api.post('/products',
     check("price", "El Precio deber ser un Entero ").isFloat().notEmpty(),
 ],
   registerProduct
-)
+).get(getProducts);
+
+api.get('/products/:codeProduct',getProductById)
 
 
 module.exports = api
