@@ -1,7 +1,8 @@
 const express = require('express');
 const {check} = require('express-validator')
 const {
-    registerClient
+    registerClient,
+    Profile
 } = require('../../controllers/ClientController');
 const api = express.Router();
 
@@ -18,5 +19,7 @@ api.post('/register',
   ],
   registerClient
 );
+
+api.post('/profile',Profile);
 
 module.exports = api

@@ -7,10 +7,10 @@ const api = express.Router();
 
 api.post('/order',
 [
-    check("idorder", "El Correo electrónico es requerido").isEmail(),
-    check("password", "La contraseña debe ser mínimo 8 caracteres").isLength({
-      min: 8,
-    }),
+    check("idorder", "El id requerido").notEmpty(),
+    check("identificacion", "La identificacion es requerida").notEmpty(),
+    check("idproduct", "La id de producto es requerida").notEmpty(),
+    check("amout", "La cantidad de productos es requerida").notEmpty(),
   ],
   createOrder
 );

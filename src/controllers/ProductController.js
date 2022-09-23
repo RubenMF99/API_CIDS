@@ -1,5 +1,21 @@
 const { products:Products } = require('../../models');
-const {validate,validate_product} = require('../services');
+const {validate} = require('../services');
+
+const validate_product = async(req,res) =>{
+  const{ codeProduct} = req.body;
+  try{
+    let product_existed = await Products.findOne({ where: { codeProduct } });
+    if (product_existed) {
+        res.status(403).json({ msg: "El producto ya existe" });
+        return true;
+      }
+      return false
+  }catch(error){
+    console.log(error);
+    return;
+  }
+ 
+}
 module.exports.registerProduct = async(req,res)=>{
     validate(req);
     try {
