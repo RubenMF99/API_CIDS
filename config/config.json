@@ -1,7 +1,6 @@
-
 {
   "development": {
-    "username": "iwtvtonkybkbba",
+    "username":  "iwtvtonkybkbba",
     "password": "a255c173e66f93033f8314acedab4c1fc102a5849dba60eed5d8aea4fdf09bed",
     "database": "d128hbtnakttbn",
     "host": "ec2-44-209-158-64.compute-1.amazonaws.com",
