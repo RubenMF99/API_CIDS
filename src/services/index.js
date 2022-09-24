@@ -3,8 +3,13 @@ const { products:Products } =require("../../models");
 const { user:User } =require("../../models");
 module.exports.validate = (req) => {
   return new Promise(async (resolve, reject) => {
+    try{
     const errores = validationResult(req);
     (!errores.isEmpty()) ? reject( errores.array()): resolve()
+    }catch(error){
+      console.log(error);
+      res.status(500).json({ msg: "Internal server error" });
+    }
 });
 }
 
@@ -16,7 +21,6 @@ module.exports.getOrder = (idorder) => {
          WHERE idorder = ${idorder}`,
     { type: sequelize.QueryTypes.SELECT }
       );
-
       resolve(order);
     } catch (error) {
       reject(error);
