@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
       unique: "email_UNIQUE"
     },
     cellPhone: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     adress: {
@@ -31,6 +31,15 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'user',
     timestamps: false,
-    indexes: []
+    indexes: [
+      {
+        name: "email_UNIQUE",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "email" },
+        ]
+      },
+    ]
   });
 };

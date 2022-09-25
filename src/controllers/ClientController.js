@@ -1,17 +1,19 @@
 const { user: User } = require("../../models");
-const { validate } = require("../services");
 const aes256 = require("aes256");
+const { validationResult } = require("express-validator");
 
 module.exports.registerClient = async (req, res) => {
-    validate(req);
   const { password, email } = req.body;
-
-  let user_existed = await User.findOne({ where: { email } });
   try {
+    const errores = validationResult(req);
+    if (!errores.isEmpty()) {
+      return res.status(400).json({ errores: errores.array() });
+    }
+    let user_existed = await User.findOne({ where: { email } });
     if (!user_existed) {
       req.body.password = aes256.encrypt(process.env.ENCRYPT_PASS, password);
       await User.create(req.body);
-      return res.status(201).json({ msg: "Usuario registrado correctamente." });
+      return res.status(200).json({ msg: "Usuario registrado correctamente." });
     }
     res.status(403).json({ msg: "El usuario ya existe" });
   } catch (error) {
@@ -21,10 +23,13 @@ module.exports.registerClient = async (req, res) => {
 };
 
 module.exports.Profile = async (req, res) => {
-  validate(req);
   const { email } = req.body;
-  let user_existed = await User.findOne({ where: { email } });
   try {
+    const errores = validationResult(req);
+    if (!errores.isEmpty()) {
+      return res.status(400).json({ errores: errores.array() });
+    }
+    let user_existed = await User.findOne({ where: { email } });
     if (user_existed) {
       return res.status(200).json({ Profile: user_existed });
     }
