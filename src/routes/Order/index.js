@@ -1,11 +1,13 @@
 const express = require('express');
 const {check} = require('express-validator')
 const {
-    createOrder
+    createOrder,
+    getAllOrder,
+    getOrderById
 } = require('../../controllers/OrderController');
 const api = express.Router();
 
-api.post('/order',
+api.route('/order').post(
 [
     check("idorder", "El id requerido").notEmpty(),
     check("identification", "La identificacion es requerida").notEmpty(),
@@ -13,6 +15,7 @@ api.post('/order',
     check("amount", "La cantidad de productos es requerida").notEmpty(),
   ],
   createOrder
-);
+).get(getAllOrder);
+api.get('/order/:idorder',getOrderById)
 
 module.exports = api

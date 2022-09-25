@@ -27,7 +27,7 @@ module.exports.createOrder = async (req, res) => {
       { type: sequelize.QueryTypes.SELECT }
     );
     if (order.length === 0) {
-      
+
       await Order.create(neworder);
       await ListOrder.create(listOrder);
       return res.status(201).json({ msg: "Orden creada correctamente." });
@@ -37,3 +37,46 @@ module.exports.createOrder = async (req, res) => {
     return res.status(400).json({ errores: error });
   }
 };
+module.exports.getAllOrder = async (req, res) => {
+  const errores = validationResult(req);
+    if (!errores.isEmpty()) {
+      return res.status(400).json({ errores: errores.array() });
+    }
+  try {
+    const orderAll = await sequelize.query(
+      `SELECT * FROM "order" INNER JOIN order_has_products 
+          ON "order".idorder = order_has_products.order_idorder`,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+    if (orderAll.length > 0) {
+      return res.status(200).json({ OrderList: orderAll })
+    }
+    return res.status(400).json({ msg: "No hay ordenes registradas" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Internal Server Error" });
+  }
+}
+module.exports.getOrderById = async (req, res) => {
+  const errores = validationResult(req);
+    if (!errores.isEmpty()) {
+      return res.status(400).json({ errores: errores.array() });
+    }
+    const idorder = req.params.idorder;
+  try {
+    const order = await sequelize.query(
+      `SELECT * FROM "order" INNER JOIN order_has_products 
+          ON "order".idorder = order_has_products.order_idorder
+          WHERE idorder = ${idorder}
+          `,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+    if (order.length > 0) {
+      return res.status(200).json({ Order: order })
+    }
+    return res.status(400).json({ msg: "No hay ordenes registradas" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Internal Server Error" });
+  }
+}
