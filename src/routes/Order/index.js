@@ -8,9 +8,9 @@ const api = express.Router();
 api.post('/order',
 [
     check("idorder", "El id requerido").notEmpty(),
-    check("identificacion", "La identificacion es requerida").notEmpty(),
+    check("identification", "La identificacion es requerida").notEmpty(),
     check("idproduct", "La id de producto es requerida").notEmpty(),
-    check("amout", "La cantidad de productos es requerida").notEmpty(),
+    check("amount", "La cantidad de productos es requerida").notEmpty(),
   ],
   createOrder
 );

@@ -1,6 +1,4 @@
 const { validationResult } = require("express-validator");
-const { products:Products } =require("../../models");
-const { user:User } =require("../../models");
 module.exports.validate = (req) => {
   return new Promise(async (resolve, reject) => {
     try{
@@ -12,7 +10,7 @@ module.exports.validate = (req) => {
     }
 });
 }
-
+/*
 module.exports.getOrder = (idorder) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -27,3 +25,4 @@ module.exports.getOrder = (idorder) => {
     }
   });
 };
+*/
