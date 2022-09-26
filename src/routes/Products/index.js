@@ -18,7 +18,7 @@ api.route('/products').post(
   registerProduct
 ).get(getProducts);
 
-api.get('/products/:codeProduct',getProductById)
+api.get('/products/:nameProduct',getProductById)
 
 
 module.exports = api

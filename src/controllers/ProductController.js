@@ -33,15 +33,15 @@ module.exports.getProducts = async (req, res) => {
 }
 
 module.exports.getProductById = async (req, res) => {
-  const { codeProduct } = req.params;
+  const { nameProduct } = req.params;
   try {
     const errores = validationResult(req);
     if (!errores.isEmpty()) {
       return res.status(400).json({ errores: errores.array() });
     }
-    let product_existed = await Products.findOne({ where: { codeProduct } });
+    let product_existed = await Products.findOne({ where: { nameProduct } });
     if (product_existed) {
-      return res.status(200).json({ Product: product_existed });
+      return res.status(200).json( {product_existed});
     }
     res.status(403).json({ msg: "El producto no existe" });
   } catch (error) {
